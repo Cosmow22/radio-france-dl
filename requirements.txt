@@ -1,7 +1,8 @@
 setuptools
 twine
-weel
+wheel
 pathlib
 argparse
-tqdm
+asyncio
+rich
 requests
