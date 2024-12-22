@@ -6,7 +6,7 @@ with open("README.md") as fp:
 
 setup(
     name="rfscrapper",
-    version="1.0",
+    version="1.0.2",
     description="A simple web scrapper tool wich downloads podcasts from radiofrance.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -22,7 +22,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "rfscrapper=rfscrapper.main:cli",
+            "rfscrapper=rfscrapper.main:run",
         ],
     },
     python_requires='>=3.6',

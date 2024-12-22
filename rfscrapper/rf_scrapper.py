@@ -1,3 +1,4 @@
+import asyncio
 import requests
 from re import compile
 
@@ -5,12 +6,13 @@ from re import compile
 API_URL_PATTERN = compile("https://media\.radiofrance-podcast\.net\/(?!.*\.m4a).*?\.mp3")
 
 
-def save_podcast(file_path, link) -> None:
+async def save_podcast(file_path: str, link: str) -> None:
     with requests.get(link, stream=True) as response:
         response.raise_for_status()
         with open(file_path, "wb") as fp:
             for chunk in response.iter_content(chunk_size=8192):
                 fp.write(chunk)
+    print(f"Successfully downloaded {file_path}")
 
 
 def get_podcast_name(url) -> str:

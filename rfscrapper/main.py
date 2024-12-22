@@ -1,7 +1,7 @@
+import asyncio
 from pathlib import Path
 from argparse import ArgumentParser
 from re import compile
-from tqdm import tqdm
 from .rf_scrapper import (
     save_podcast,
     get_podcast_name,
@@ -20,7 +20,7 @@ def convert_path(path) -> Path:
     
     Notes:
         If the input path is already an absolute path, it is returned as is.
-"""
+    """
     return Path.cwd() / path
 
 
@@ -43,7 +43,7 @@ def create_parser() -> ArgumentParser:
     return parser
 
 
-def cli() -> None:
+async def cli() -> None:
     """Contains all the logic of the cli."""
     parser = create_parser()
     args = parser.parse_args()
@@ -53,15 +53,17 @@ def cli() -> None:
     if podcast_reference.endswith(".txt"):
         podcast_reference: Path = convert_path(podcast_reference)
         skipped_urls = []
-        with open(podcast_reference) as fp:
-            for line in tqdm(fp.readlines()):
+        with open(podcast_reference, encoding="utf-8") as fp:
+            coroutines = []
+            for line in fp.readlines():
                 line = line.rstrip("\n")  # remove url encoding newline
-                if INPUT_URL_PATTERN.match(line):
+                if INPUT_URL_PATTERN.match(line):                        
                     download_url = get_podcast_api_url(line)
                     file_path = convert_path(output_folder/get_podcast_name(line))
-                    save_podcast(file_path, download_url)
+                    coroutines.append(save_podcast(file_path, download_url))
                 else:
                     skipped_urls.append(line)
+            await asyncio.gather(*coroutines)
         if skipped_urls:
             print("The following URLs have been ignored because they are invalid: ")
         for url in skipped_urls: print(url)
@@ -71,3 +73,8 @@ def cli() -> None:
         save_podcast(file_path, download_url)
     else:
         print("error: The given url is invalid")
+
+
+def run():
+    """Runs the CLI asynchronously."""
+    asyncio.run(cli())

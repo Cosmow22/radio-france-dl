@@ -4,5 +4,4 @@ wheel
 pathlib
 argparse
 asyncio
-rich
 requests
