@@ -70,7 +70,7 @@ async def cli() -> None:
     elif INPUT_URL_PATTERN.match(podcast_reference):
         download_url = get_podcast_api_url(podcast_reference)
         file_path: Path = convert_path(output_folder/get_podcast_name(podcast_reference))
-        save_podcast(file_path, download_url)
+        await save_podcast(file_path, download_url)
     else:
         print("error: The given url is invalid")
 

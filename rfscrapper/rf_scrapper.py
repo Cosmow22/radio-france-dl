@@ -20,7 +20,9 @@ def get_podcast_name(url) -> str:
     url = "-".join(url[5:])
     url = url.split("-")
     url = url[:-1]
-    url = "-".join(url)+".mp3"
+
+
+    url = " ".join(url)+".mp3"
     return url
 
 

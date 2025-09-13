@@ -1,5 +1,7 @@
+.vscode
 .env
 .venv
 dist/
 build/
+apitoken
 rfscrapper.egg-info/
