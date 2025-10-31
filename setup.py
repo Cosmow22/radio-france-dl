@@ -5,12 +5,12 @@ with open("README.md") as fp:
     long_description = fp.read()
 
 setup(
-    name="rfscrapper",
-    version="2.1",
+    name="rfdl",
+    version="1",
     description="A simple web scrapper tool wich downloads podcasts from radiofrance.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Cosmow22/radio-france-podcasts-scrapper",
+    url="https://github.com/Cosmow22/radio-france-dl",
     author="Cosmow22",
     author_email="cosmow543@gmail.com",
     license="MIT",
@@ -22,7 +22,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "rfscrapper=rfscrapper.main:run",
+            "rfdl=rfdl.main:run",
         ],
     },
     python_requires='>=3.6',

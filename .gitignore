@@ -4,5 +4,5 @@
 dist/
 build/
 apitoken
-rfscrapper.egg-info/
+rfdl.egg-info/
 __pycache__
