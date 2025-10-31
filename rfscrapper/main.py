@@ -2,43 +2,25 @@ import asyncio
 from pathlib import Path
 from argparse import ArgumentParser
 from re import compile
-from .rf_scrapper import (
-    save_podcast,
-    get_podcast_name,
-    get_podcast_api_url,
-)
+from .rf_scrapper import * 
 
-
-INPUT_URL_PATTERN = compile(
-    "^https:\/\/www\.radiofrance\.fr\/(franceculture|franceinter)\/podcasts.*[0-9]{7}$"
-)
-
-
-def convert_path(path) -> Path:
-    """
-    Join a given path with the current working directory to create an absolute path.
-    
-    Notes:
-        If the input path is already an absolute path, it is returned as is.
-    """
-    return Path.cwd() / path
+INPUT_URL_PATTERN = compile(r"^https:\/\/www\.radiofrance\.fr\/(franceculture|franceinter)\/podcasts.*[0-9]{7}$")
 
 
 def create_parser() -> ArgumentParser:
-    """Creates a parser wich takes 2 arguments : podcasts (required) and output (optionnal)."""
+    """Crée un analyseur syntaxique qui prend deux arguments : podcasts (obligatoire) et sortie (facultatif)."""
     parser = ArgumentParser(
         prog="rfscrapper",
-        description="A simple CLI wich downloads podcasts from radiofrance."
+        description="Un CLI simple qui permet de télécharger des podcasts depuis radiofrance"
     )
     parser.add_argument(
         "podcasts",
-        help="Must either be a link to the podcast you want to download or the path to a file were each line is a link."
+        help="Le ou les liens vers le ou les podcasts que vous souhaitez télécharger. Vous pouvez fournir plusieurs liens en les séparant par un saut de ligne."
     )
     parser.add_argument(
         "-o", "--output",
-        type=convert_path,
         default=".",  #  current directory
-        help="The output folder in which you want to put your downloads. By default, it is s the current folder directory."
+        help="Le dossier de sortie dans lequel vous souhaitez enregistrer vos téléchargements. Par défaut, il s'agit du répertoire du dossier actuel."
         )
     return parser
 
@@ -47,34 +29,20 @@ async def cli() -> None:
     """Contains all the logic of the cli."""
     parser = create_parser()
     args = parser.parse_args()
-    podcast_reference: str = args.podcasts
-    output_folder: Path = args.output
+    podcasts_links: str = args.podcasts
+    output_folder: Path = Path.cwd() / args.output
     output_folder.mkdir(exist_ok=True)
-    if podcast_reference.endswith(".txt"):
-        podcast_reference: Path = convert_path(podcast_reference)
-        skipped_urls = []
-        with open(podcast_reference, encoding="utf-8") as fp:
-            coroutines = []
-            for line in fp.readlines():
-                line = line.rstrip("\n")  # remove url encoding newline
-                if INPUT_URL_PATTERN.match(line):                        
-                    download_url = get_podcast_api_url(line)
-                    file_path = convert_path(output_folder/get_podcast_name(line))
-                    coroutines.append(save_podcast(file_path, download_url))
-                else:
-                    skipped_urls.append(line)
-            await asyncio.gather(*coroutines)
-        if skipped_urls:
-            print("The following URLs have been ignored because they are invalid: ")
-        for url in skipped_urls: print(url)
-    elif INPUT_URL_PATTERN.match(podcast_reference):
-        download_url = get_podcast_api_url(podcast_reference)
-        file_path: Path = convert_path(output_folder/get_podcast_name(podcast_reference))
-        await save_podcast(file_path, download_url)
-    else:
-        print("error: The given url is invalid")
+    
+    podcasts_links = podcasts_links.strip().split("\n")
+    for podcast_link in podcasts_links:
+        if INPUT_URL_PATTERN.match(podcast_link):
+            download_url = get_podcast_api_url(podcast_link)
+            file_path: Path = output_folder/get_podcast_name(podcast_link)
+            await save_podcast(file_path, download_url)
+        else:
+            print(f"[ERREUR] L'URL donnée est invalide:\n {podcast_link}")
 
 
 def run():
-    """Runs the CLI asynchronously."""
+    """Exécute l'interface CLI de manière asynchrone."""
     asyncio.run(cli())

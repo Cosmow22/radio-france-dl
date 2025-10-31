@@ -6,7 +6,7 @@ with open("README.md") as fp:
 
 setup(
     name="rfscrapper",
-    version="2",
+    version="2.1",
     description="A simple web scrapper tool wich downloads podcasts from radiofrance.",
     long_description=long_description,
     long_description_content_type="text/markdown",

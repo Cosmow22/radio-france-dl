@@ -3,7 +3,7 @@ import requests
 from re import compile
 
 
-API_URL_PATTERN = compile("https://media\.radiofrance-podcast\.net\/(?!.*\.m4a).*?\.mp3")
+API_URL_PATTERN = compile(r"https://media\.radiofrance-podcast\.net\/(?!.*\.m4a).*?\.mp3")
 
 
 async def save_podcast(file_path: str, link: str) -> None:
@@ -12,7 +12,7 @@ async def save_podcast(file_path: str, link: str) -> None:
         with open(file_path, "wb") as fp:
             for chunk in response.iter_content(chunk_size=8192):
                 fp.write(chunk)
-    print(f"Successfully downloaded {file_path}")
+    print(f"Téléchargement réussi !  {file_path}")
 
 
 def get_podcast_name(url) -> str:
@@ -34,8 +34,4 @@ def get_podcast_api_url(url):
     if result:
         return result[0]
     else:
-        raise Exception(
-f"""Failed to get the download url for the given url: 
-{url}
-"""
-        )
+        raise Exception(f"Une erreur s'est produite lors du téléchargement : {url}")

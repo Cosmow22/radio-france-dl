@@ -1,34 +1,36 @@
-# Welcome to radiofrance scraper CLI
+# Radiofrance Podcasts Scrapper
 
-A simple CLI that downloads one or more podcasts from <https://www.radiofrance.fr/>.
+Un CLI simple qui permet de télécharger un ou plusieurs podcasts de <https://www.radiofrance.fr/>.
 
-I made this script because users are not allowed to download all podcasts on mobile.
+## Utilisation
 
-You can then transfer your favourite podcasts to your phone to listen to them offline!
-
-## How to
-
-Install rfscrapper by running this comand:
+Installer rfscrapper :
 
 ```batch
 pip install rfscrapper
 ```
 
-You can run rfscrapper with 2 arguments:
 
-1. Must either be a link to the podcast you want to download or the path to a file were each line is a link. A new line is created each time you press the Enter key, so don't be fooled by the notepad when it displays the link you just pasted over two lines!
-2. The output folder in which you want to put your downloads. By default, it is s the current folder directory.
+Télécharger un podcast :
 
-For example..
-
-```batch
-rfscrapper "put here a link in brackets"
+```
+rfscrapper lien
 ```
 
-or
+Ou plusieurs podcasts en même temps en allant à la ligne :
 
-```batch
-rfscrapper "list.txt" -o "output_folder"
+```
+rfscrapper "lien1
+lien2
+"
 ```
 
-are both correct ways to launch the CLI !
+Par défaut, le podcast se télécharge dans le dossier courant. Pour spécifier le dossier cible, utiliser l'argument optionel output comme ça :
+
+```
+rfscrapper lien --output "C:\Users\Marc\Desktop/podcasts"
+```
+
+## License
+
+Ce projet est sous la license MIT. Soyer libre d'utiliser le code comme vous le voulez !
