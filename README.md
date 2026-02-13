@@ -17,6 +17,12 @@ Télécharger un podcast :
 rfdl lien
 ```
 
+Par exemple : 
+
+```
+rfdl https://www.radiofrance.fr/franceculture/podcasts/la-conversation-scientifique/faut-il-bouleverser-l-organisation-de-la-recherche-scientifique-7688303
+```
+
 Ou plusieurs podcasts en même temps en allant à la ligne :
 
 ```
