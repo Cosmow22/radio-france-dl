@@ -10,7 +10,7 @@ INPUT_URL_PATTERN = compile(r"^https:\/\/www\.radiofrance\.fr\/(franceculture|fr
 def create_parser() -> ArgumentParser:
     """Crée un analyseur syntaxique qui prend deux arguments : podcasts (obligatoire) et sortie (facultatif)."""
     parser = ArgumentParser(
-        prog="rfscrapper",
+        prog="rfdl",
         description="Un CLI simple qui permet de télécharger des podcasts depuis radiofrance"
     )
     parser.add_argument(
