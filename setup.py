@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
 
-with open("README.md") as fp:
+with open("README.md", encoding="utf-8") as fp:
     long_description = fp.read()
 
 setup(
     name="rfdl",
-    version="1",
+    version="1.2",
     description="A simple web scrapper tool wich downloads podcasts from radiofrance.",
     long_description=long_description,
     long_description_content_type="text/markdown",
