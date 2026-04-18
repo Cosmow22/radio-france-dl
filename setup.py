@@ -6,7 +6,7 @@ with open("README.md", encoding="utf-8") as fp:
 
 setup(
     name="rfdl",
-    version="1.3",
+    version="1.3.1",
     description="A simple web scrapper tool wich downloads podcasts from radiofrance.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -26,4 +26,7 @@ setup(
         ],
     },
     python_requires='>=3.6',
+    install_requires=[
+        "requests>=2.31",
+    ]
 )
