@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from re import compile
 from .rfdl import * 
 
-INPUT_URL_PATTERN = compile(r"^https:\/\/www\.radiofrance\.fr\/(franceculture|franceinter)\/podcasts.*[0-9]{7}$")
+INPUT_URL_PATTERN = compile(r"^https:\/\/www\.radiofrance\.fr\/(franceculture|franceinter|francebleu|franceinfo|fip|mouv)\/podcasts.*[0-9]{7}$")
 
 
 def create_parser() -> ArgumentParser:
@@ -34,13 +34,13 @@ async def cli() -> None:
     output_folder.mkdir(exist_ok=True)
     
     podcasts_links = podcasts_links.strip().split("\n")
-    for podcast_link in podcasts_links:
-        if INPUT_URL_PATTERN.match(podcast_link):
-            download_url = get_podcast_api_url(podcast_link)
-            file_path: Path = output_folder/get_podcast_name(podcast_link)
-            await save_podcast(file_path, download_url)
+    for user_url in podcasts_links:
+        if INPUT_URL_PATTERN.match(user_url):
+            media_url = get_podcast_api_url(user_url)
+            file_path: Path = output_folder/get_podcast_name(user_url, media_url)
+            await save_podcast(file_path, media_url)
         else:
-            print(f"[ERREUR] L'URL donnée est invalide:\n {podcast_link}")
+            print(f"[ERREUR] L'URL donnée est invalide:\n {user_url}")
 
 
 def run():
