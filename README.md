@@ -1,3 +1,5 @@
+![PyPI - Downloads](https://img.shields.io/pypi/dm/rfdl)
+
 # Radiofrance Podcast Downloader
 
 Un CLI simple qui permet de télécharger un ou plusieurs podcasts de <https://www.radiofrance.fr/>.
