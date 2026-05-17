@@ -1,6 +1,8 @@
 # Radiofrance Podcast Downloader
 
-Un CLI simple qui permet de télécharger un ou plusieurs podcasts de <https://www.radiofrance.fr/>.
+Un CLI simple qui permet de télécharger un ou plusieurs podcasts de [radiofrance.fr](https://www.radiofrance.fr).
+
+Existe aussi en version web : [radio-france-podcast.cosmow22.fr](https://radio-france-podcast.cosmow22.fr)
 
 ## Utilisation
 
