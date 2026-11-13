@@ -12,7 +12,6 @@ async def save_podcast(file_path: str, link: str) -> None:
         with open(file_path, "wb") as fp:
             for chunk in response.iter_content(chunk_size=8192):
                 fp.write(chunk)
-    print(f"Téléchargement réussi ! {file_path}")
 
 
 def get_podcast_name(user_url, media_url) -> str:

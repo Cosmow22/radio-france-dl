@@ -39,8 +39,11 @@ async def cli() -> None:
             media_url = get_podcast_api_url(user_url)
             file_path: Path = output_folder/get_podcast_name(user_url, media_url)
             await save_podcast(file_path, media_url)
+            print(f"\nTéléchargement réussi !")
+            print(f"Emplacement : \033]8;;{Path(output_folder).resolve().as_uri()}\033\\Ouvrir dans l'explorateur\033]8;;\033\\")
         else:
             print(f"[ERREUR] L'URL donnée est invalide:\n {user_url}")
+    print("\nSi cet outil vous a été utile, mettez une étoile sur github !")
 
 
 def run():
